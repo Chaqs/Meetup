@@ -1,0 +1,11 @@
+---
+name: Meetup
+author: Senpayeh
+api: [3.0.0]
+main: senpayeh\meetup\Meetup
+version: 1.0
+permissions:
+  meetup.command:
+    default: op
+    permission: Allow to use /meetup command
+...

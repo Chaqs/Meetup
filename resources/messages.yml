@@ -1,0 +1,11 @@
+---
+# Custom in-game messages
+# Use %player% to send winner's name
+# You can use & to replace § - example: &a%player% has won!
+# Remember: Grace Period ends in 15 seconds!
+start.game: "&9[Meetup] &bThe game has started. Grace period ends in 15 seconds."
+stop.game: "&9[Meetup] &bThe game has stopped."
+win.game: "&9[Meetup] &b%player% has just won the game!"
+win.game.player: "&9[Meetup] &bYou won the game! Congratulations."
+pvp.enable: "&9[Meetup] &bPvP is now enabled!"
+...

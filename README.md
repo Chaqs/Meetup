@@ -1,5 +1,6 @@
 # Meetup
 This plugin allows you to host your own Meetup games on your PocketMine-MP Server!
+You can find the latest development phars [here](https://poggit.pmmp.io/ci/senpayeh/Meetup/Meetup)
 ## Before installing
 Meetup is a plugin that I suggest you to use on secondary servers, but it'll work on main ones too.
 ## Plugin setup

@@ -1,8 +1,5 @@
 # Meetup
 This plugin allows you to host your own Meetup games on your PocketMine-MP Server!
-## Before installing
-Make sure you have installed [FormAPI](https://poggit.pmmp.io/p/FormAPI/1.3.0) to make this plugin work properly
-Read the rest of the README to know everything about the plugin.
 ## Plugin setup
 ### General Configuration
 Before using the plugin, the first thing you want to do is go to ```plugin_data/Meetup/config.yml``` and digit the name of the world in which you want Meetups to run. You will also find other settings, such as *length* and *spectators*. If you want, you can already set your preferred values. 

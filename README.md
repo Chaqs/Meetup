@@ -1,5 +1,7 @@
 # Meetup
 This plugin allows you to host your own Meetup games on your PocketMine-MP Server!
+## Before installing
+Meetup is a plugin that I suggest you to use on secondary servers, but it'll work on main ones too.
 ## Plugin setup
 ### General Configuration
 Before using the plugin, the first thing you want to do is go to ```plugin_data/Meetup/config.yml``` and digit the name of the world in which you want Meetups to run. You will also find other settings, such as *length* and *spectators*. If you want, you can already set your preferred values. 

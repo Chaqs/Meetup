@@ -15,8 +15,8 @@ Once set up the ```config.yml``` file, go to ```plugin_data/Meetup/kit.yml```. I
 **Note:** if you don't want an armor piece, the whole value will be ```0:0:0:0:0``` otherwise the kit won't work. If you don't want any enchantment, put ```0:0``` on the ```enchantName``` and ```enchantLevel``` parts.
 ### Customizable messages
 If you want to use custom messages for your Meetup game, you can simply go to ```plugin_data/Meetup/messages.yml``` file and edit all the texts. Use **%player%** to indicate the winner of the Meetup. There are examples to help you make your own messages.
-### Scenarios (Coming soon)
-Scenarios will be added in the next updates of the plugin. This project, in fact, is still WIP.
+### Scenarios
+• Enabling NoClean, players will get a regeneration effect for 10 seconds after killing a player to prevent cleanupping (1.1 update)
 ## Issues
 If you are encountering issues, make sure to add one in the relative tab.
 ## Acknowledgments

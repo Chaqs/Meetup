@@ -8,7 +8,8 @@ These features will probably arrive soon\
  • Statistics\
  • Better Hosting\
  • Spectators settings\
- • Border
+ • Border\
+ • Random kits
 ## Before installing
 Meetup is a plugin that I suggest you to use on secondary servers, but it'll work on main ones too.
 ## Issues

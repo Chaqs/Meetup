@@ -6,7 +6,7 @@ You can find the latest development phars [here](https://poggit.pmmp.io/ci/senpa
  • Scoreboard\
  • Statistics\
  • Better Hosting\
- • Spectators settings\
+ • Spectators settings
 ## Before installing
 Meetup is a plugin that I suggest you to use on secondary servers, but it'll work on main ones too.
 ## Issues

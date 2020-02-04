@@ -1,0 +1,8 @@
+---
+name: Meetup
+api: [3.0.0]
+version: 1.0.0
+main: senpayeh\meetup\Meetup
+description: Meetup - by Senpayeh
+website: https://github.com/senpayeh
+...

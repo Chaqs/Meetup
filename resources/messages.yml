@@ -1,0 +1,11 @@
+---
+error_invalid_arguments: "&cCorrect usage: /meetup [start, stop]"
+error_meetup_running: "&cFailed to start a Meetup: one is already running on this server"
+error_meetup_not_running: "&cFailed to stop a Meetup: no meetups are running"
+
+message_win_winner: "&6You won a &eMeetup &egame!"
+message_win_server: "&6%player% &ehas won a Meetup game!"
+message_stop: "&6The current Meetup has been stopped"
+message_start: "&eMeetup started! &6Grace period ends in %grace% seconds"
+message_pvp: "&eGrace period has ended! Game ends in &6%pvp% seconds"
+...

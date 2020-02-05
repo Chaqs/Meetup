@@ -6,6 +6,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
+use pocketmine\event\player\PlayerGameModeChangeEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 use senpayeh\meetup\Meetup;
@@ -95,6 +96,16 @@ class MeetupListener implements Listener {
                     Meetup::getMeetupManager()->removePlayer($player);
                 }
             }
+        }
+    }
+
+    /**
+     * @param PlayerGameModeChangeEvent $event
+     */
+    public function onGamemodeChange(PlayerGameModeChangeEvent $event) : void{
+        $player = $event->getPlayer();
+        if (Meetup::getMeetupManager()->isPlaying($player)) {
+            Meetup::getMeetupManager()->removePlayer($player);
         }
     }
 

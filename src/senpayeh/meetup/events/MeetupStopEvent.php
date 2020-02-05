@@ -38,6 +38,7 @@ class MeetupStopEvent extends PluginEvent {
             if ($this->message === true) {
                 $player->sendMessage(MeetupUtils::getTranslatedMessage("message_stop"));
             }
+            $player->setImmobile(false);
             $player->setGamemode(Player::SURVIVAL);
             $player->setFood(20);
             $player->setHealth($player->getMaxHealth());

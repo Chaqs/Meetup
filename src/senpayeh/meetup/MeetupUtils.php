@@ -8,8 +8,12 @@ use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\AddActorPacket;
+use pocketmine\network\mcpe\protocol\RemoveEntityPacket;
+use pocketmine\network\mcpe\protocol\SetActorLinkPacket;
+use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use senpayeh\meetup\scoreboard\ScoreboardUpdater;
 
 class MeetupUtils {
 
@@ -39,9 +43,17 @@ class MeetupUtils {
      * @param string $str
      * @return string|string[]
      */
-    public static function getTranslatedMessage(string $str, $player = null, $grace = null, $pvp = null) {
+    public static function getTranslatedMessage(string $str, $player = null, $grace = null, $pvp = null, $start = null) {
         $msg = Meetup::getInstance()->msg[$str];
-        return str_replace("&k", TextFormat::OBFUSCATED, str_replace("&r",TextFormat::RESET, str_replace("&l",TextFormat::BOLD, str_replace("&o",TextFormat::ITALIC, str_replace("&f",TextFormat::WHITE, str_replace("&e",TextFormat::YELLOW, str_replace("&d",TextFormat::LIGHT_PURPLE, str_replace("&c",TextFormat::RED, str_replace("&b",TextFormat::AQUA, str_replace("&a",TextFormat::GREEN, str_replace("&0",TextFormat::BLACK, str_replace("&9",TextFormat::BLUE, str_replace("&8",TextFormat::DARK_GRAY, str_replace("&7",TextFormat::GRAY, str_replace("&6",TextFormat::GOLD, str_replace("&5",TextFormat::DARK_PURPLE, str_replace("&4",TextFormat::DARK_RED, str_replace("&3",TextFormat::DARK_AQUA, str_replace("&2",TextFormat::DARK_GREEN, str_replace("&1",TextFormat::DARK_BLUE, str_replace("%player%", $player, str_replace("%pvp%", $pvp, str_replace("%grace%", $grace, $msg)))))))))))))))))))))));
+        return str_replace("&k", TextFormat::OBFUSCATED, str_replace("&r",TextFormat::RESET, str_replace("&l",TextFormat::BOLD, str_replace("&o",TextFormat::ITALIC, str_replace("&f",TextFormat::WHITE, str_replace("&e",TextFormat::YELLOW, str_replace("&d",TextFormat::LIGHT_PURPLE, str_replace("&c",TextFormat::RED, str_replace("&b",TextFormat::AQUA, str_replace("&a",TextFormat::GREEN, str_replace("&0",TextFormat::BLACK, str_replace("&9",TextFormat::BLUE, str_replace("&8",TextFormat::DARK_GRAY, str_replace("&7",TextFormat::GRAY, str_replace("&6",TextFormat::GOLD, str_replace("&5",TextFormat::DARK_PURPLE, str_replace("&4",TextFormat::DARK_RED, str_replace("&3",TextFormat::DARK_AQUA, str_replace("&2",TextFormat::DARK_GREEN, str_replace("&1",TextFormat::DARK_BLUE, str_replace("%player%", $player, str_replace("%pvp%", $pvp, str_replace("%grace%", $grace, str_replace("%start%", $start, $msg))))))))))))))))))))))));
+    }
+
+    /**
+     * @param string $msg
+     * @return string|string[]
+     */
+    public static function getTranslatedLines(string $msg, $kills = null, $border = null, $time = null, $alive = null, $spectators = null, $online = null) {
+        return str_replace("&k", TextFormat::OBFUSCATED, str_replace("&r",TextFormat::RESET, str_replace("&l",TextFormat::BOLD, str_replace("&o",TextFormat::ITALIC, str_replace("&f",TextFormat::WHITE, str_replace("&e",TextFormat::YELLOW, str_replace("&d",TextFormat::LIGHT_PURPLE, str_replace("&c",TextFormat::RED, str_replace("&b",TextFormat::AQUA, str_replace("&a",TextFormat::GREEN, str_replace("&0",TextFormat::BLACK, str_replace("&9",TextFormat::BLUE, str_replace("&8",TextFormat::DARK_GRAY, str_replace("&7",TextFormat::GRAY, str_replace("&6",TextFormat::GOLD, str_replace("&5",TextFormat::DARK_PURPLE, str_replace("&4",TextFormat::DARK_RED, str_replace("&3",TextFormat::DARK_AQUA, str_replace("&2",TextFormat::DARK_GREEN, str_replace("&1",TextFormat::DARK_BLUE, str_replace("%kills%", $kills, str_replace("%border%", $border, str_replace("%spectators%", $spectators, str_replace("%alive%", $alive, str_replace("%time%", $time, str_replace("%online%", $online, $msg))))))))))))))))))))))))));
     }
 
     /**
@@ -59,6 +71,9 @@ class MeetupUtils {
         return $item;
     }
 
+    /**
+     * @param Player $player
+     */
     public static function addKit(Player $player) : void{
         $player->getArmorInventory()->setHelmet(self::getItemData(Meetup::getInstance()->kit["kit"]["helmet"]));
         $player->getArmorInventory()->setChestplate(self::getItemData(Meetup::getInstance()->kit["kit"]["chestplate"]));
@@ -67,6 +82,22 @@ class MeetupUtils {
         foreach (Meetup::getInstance()->kit["kit"]["items"] as $item) {
             $player->getInventory()->addItem(self::getItemData($item));
         }
+    }
+
+    /**
+     * @param Player $player
+     */
+    public static function addLobbyItems(Player $player) : void{
+        $player->getInventory()->setContents([
+            4 => Item::get(Item::DIAMOND_SWORD, 0, 1)->setCustomName(TextFormat::RESET . TextFormat::GOLD . "Join Meetup"),
+        ]);
+    }
+
+    /**
+     * @param Player $player
+     */
+    public static function addScoreboard(Player $player) : void{
+        Meetup::getInstance()->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdater($player), 20);
     }
 
 }

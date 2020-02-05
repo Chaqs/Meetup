@@ -59,6 +59,7 @@ class MeetupStateChangeEvent extends PluginEvent {
             $player->getArmorInventory()->clearAll();
             $player->getInventory()->clearAll();
             MeetupUtils::addKit($player);
+            $player->teleport(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["game"])->getSafeSpawn());
         }
         Meetup::getMeetupManager()->setState(MeetupState::GRACE);
         var_dump(Meetup::getMeetupManager()->getState());

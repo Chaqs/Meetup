@@ -8,6 +8,7 @@ use pocketmine\event\entity\EntityLevelChangeEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerGameModeChangeEvent;
+use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
@@ -26,6 +27,14 @@ class MeetupListener implements Listener {
     public function __construct(Meetup $plugin) {
         $this->plugin = $plugin;
         $plugin->getServer()->getPluginManager()->registerEvents($this, $plugin);
+    }
+
+    /**
+     * @param PlayerJoinEvent $event
+     */
+    public function onJoin(PlayerJoinEvent $event) : void{
+        $player = $event->getPlayer();
+        MeetupUtils::addScoreboard($player);
     }
 
     /**
@@ -120,6 +129,7 @@ class MeetupListener implements Listener {
             if ($event->getTarget() == $this->plugin->getServer()->getLevelByName($this->plugin->getConfig()->getAll()["worlds"]["hub"])) {
                 MeetupUtils::addLobbyItems($entity);
             }
+            MeetupUtils::addScoreboard($entity);
         }
     }
 

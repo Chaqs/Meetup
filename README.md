@@ -6,7 +6,7 @@ Features I'm working on:
  - [ ] Scenarios
  - [ ] Scoreboard
  - [ ] Statistics
- - [ ] Better Hosting
+ - [x] Better Hosting
  - [ ] Spectators settings
  - [ ] Border
  - [ ] Random kits

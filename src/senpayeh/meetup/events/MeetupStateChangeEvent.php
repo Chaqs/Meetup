@@ -27,8 +27,13 @@ class MeetupStateChangeEvent extends PluginEvent {
         $this->setPlayers($players);
         $this->fromState = $fromState;
         $this->toState = $toState;
-        if ($toState == MeetupState::GRACE) {
-            $this->start();
+        switch ($toState) {
+            case MeetupState::GRACE:
+                $this->start();
+                break;
+            case MeetupState::STARTING:
+                $this->prestart();
+                break;
         }
     }
 
@@ -46,11 +51,15 @@ class MeetupStateChangeEvent extends PluginEvent {
         $this->players = $players;
     }
 
-    public function start() : void{
+    public function prestart() : void{
         Meetup::getMeetupManager()->setRunning();
+        Meetup::getMeetupManager()->setState(MeetupState::STARTING);
+        Meetup::getInstance()->getScheduler()->scheduleRepeatingTask(new MeetupTask(Meetup::getInstance()), 20);
+    }
+
+    public function start() : void{
         foreach (Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers() as $player) {
             Meetup::getMeetupManager()->addPlayer($player);;
-            $player->sendMessage(MeetupUtils::getTranslatedMessage("message_start", null, Meetup::getInstance()->getConfig()->getAll()["gameplay"]["grace"]));
             $player->setGamemode(Player::SURVIVAL);
             $player->setFood(20);
             $player->setHealth($player->getMaxHealth());
@@ -59,10 +68,9 @@ class MeetupStateChangeEvent extends PluginEvent {
             $player->getInventory()->clearAll();
             MeetupUtils::addKit($player);
             $player->teleport(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["game"])->getSafeSpawn());
+            $player->setImmobile();
+            $player->setSneaking();
         }
-        Meetup::getMeetupManager()->setState(MeetupState::GRACE);
-        var_dump(Meetup::getMeetupManager()->getState());
-        Meetup::getInstance()->getScheduler()->scheduleRepeatingTask(new MeetupTask(Meetup::getInstance()), 20);
     }
 
     /**

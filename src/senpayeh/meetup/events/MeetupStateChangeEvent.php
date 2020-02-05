@@ -48,7 +48,6 @@ class MeetupStateChangeEvent extends PluginEvent {
 
     public function start() : void{
         Meetup::getMeetupManager()->setRunning();
-        var_dump(Meetup::getMeetupManager()->isRunning());
         foreach (Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers() as $player) {
             Meetup::getMeetupManager()->addPlayer($player);;
             $player->sendMessage(MeetupUtils::getTranslatedMessage("message_start", null, Meetup::getInstance()->getConfig()->getAll()["gameplay"]["grace"]));

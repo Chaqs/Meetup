@@ -44,7 +44,7 @@ class MeetupCommand extends Command implements PluginIdentifiableCommand {
                     $sender->sendMessage(MeetupUtils::getTranslatedMessage("error_meetup_running"));
                     return false;
                 }
-                (new MeetupStateChangeEvent(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers(), MeetupState::GRACE))->call();
+                (new MeetupStateChangeEvent(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers(), MeetupState::STARTING))->call();
                 return true;
                 break;
             case "stop":

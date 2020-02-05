@@ -4,9 +4,11 @@ namespace senpayeh\meetup\listener;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\entity\EntityLevelChangeEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerGameModeChangeEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 use senpayeh\meetup\Meetup;
@@ -106,6 +108,28 @@ class MeetupListener implements Listener {
         $player = $event->getPlayer();
         if (Meetup::getMeetupManager()->isPlaying($player)) {
             Meetup::getMeetupManager()->removePlayer($player);
+        }
+    }
+
+    /**
+     * @param EntityLevelChangeEvent $event
+     */
+    public function onLevelChange(EntityLevelChangeEvent $event) : void{
+        $entity = $event->getEntity();
+        if ($entity instanceof Player) {
+            if ($event->getTarget() == $this->plugin->getServer()->getLevelByName($this->plugin->getConfig()->getAll()["worlds"]["hub"])) {
+                MeetupUtils::addLobbyItems($entity);
+            }
+        }
+    }
+
+    /**
+     * @param PlayerMoveEvent $event
+     */
+    public function onMove(PlayerMoveEvent $event) : void{
+        $player = $event->getPlayer();
+        if ($player->isImmobile()) {
+            $event->setCancelled();
         }
     }
 

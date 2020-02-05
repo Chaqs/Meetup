@@ -45,8 +45,10 @@ class Meetup extends PluginBase {
     public function initConfig() : void{
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, [
             "gameplay" => [
+                "voting" => 60,
                 "grace" => 15,
-                "end" => 600
+                "end" => 600,
+                "border" => 125
             ],
             "worlds" => [
                 "hub" => "lobby",

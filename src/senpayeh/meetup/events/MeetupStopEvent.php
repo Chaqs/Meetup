@@ -46,6 +46,7 @@ class MeetupStopEvent extends PluginEvent {
             $player->getArmorInventory()->clearAll();
             $player->getInventory()->clearAll();
             $player->teleport(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getSafeSpawn());
+            MeetupUtils::addScoreboard($player);
         }
     }
 

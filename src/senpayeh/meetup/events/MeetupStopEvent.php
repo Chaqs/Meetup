@@ -31,7 +31,7 @@ class MeetupStopEvent extends PluginEvent {
     public function managePlayers() : void{
         Meetup::getInstance()->getScheduler()->cancelAllTasks();
 
-        foreach (Meetup::getInstance()->getServer()->getOnlinePlayers() as $player) {
+        foreach (Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["game"])->getPlayers() as $player) {
 
             if (Meetup::getMeetupManager()->isPlaying($player)) {
                 Meetup::getMeetupManager()->removePlayer($player);
@@ -58,7 +58,7 @@ class MeetupStopEvent extends PluginEvent {
             $player->getInventory()->clearAll();
 
             $player->teleport(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getSafeSpawn());
-            
+
         }
     }
 

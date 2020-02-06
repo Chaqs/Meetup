@@ -8,12 +8,8 @@ use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\AddActorPacket;
-use pocketmine\network\mcpe\protocol\RemoveEntityPacket;
-use pocketmine\network\mcpe\protocol\SetActorLinkPacket;
-use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
-use senpayeh\meetup\scoreboard\ScoreboardUpdater;
 
 class MeetupUtils {
 
@@ -91,13 +87,6 @@ class MeetupUtils {
         $player->getInventory()->setContents([
             4 => Item::get(Item::DIAMOND_SWORD, 0, 1)->setCustomName(TextFormat::RESET . TextFormat::GOLD . "Join Meetup"),
         ]);
-    }
-
-    /**
-     * @param Player $player
-     */
-    public static function addScoreboard(Player $player) : void{
-        Meetup::getInstance()->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdater($player), 20);
     }
 
 }

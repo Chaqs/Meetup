@@ -7,7 +7,7 @@ Features I'm working on:
  - [ ] Statistics
  - [ ] Spectators settings
  - [ ] Border
- - [ ] Random kits
+ - [x] Random kits
 ## Before installing
 Meetup is a plugin that I suggest you to use on secondary servers, but it'll work on main ones too.
 ## Issues

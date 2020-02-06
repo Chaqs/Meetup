@@ -10,29 +10,3 @@ message_stop: "&6[GAME] &fThe current Meetup has been stopped"
 message_seconds_to_start: "&6[GAME] &fMeetup starting in %start% seconds"
 message_start: "&6[GAME] &fMeetup started! &6Grace period ends in %grace% seconds"
 message_pvp: "&6[GAME] &fGrace period has ended! Game ends in &6%pvp% seconds"
-
-# Scoreboard
-scoreboard_title: " &l&6UHC Meetup  "
-waiting_scoreboard:
-  - " &fState: &6Waiting"
-  - " &fOnline: &6%online%"
-  - " &fServer: &6hello.net"
-starting_scoreboard:
-  - " &fState: &6Starting..."
-  - " &fOnline: &6%online%"
-  - " &fServer: &6hello.net"
-grace_scoreboard:
-  - " &fAlive: &6%alive%"
-  - " &fSpectators: &6%spectators%"
-  - " "
-  - " &fKills: &6%kills%"
-  - "  "
-  - " &fBorder: &6%border%"
-pvp_scoreboard:
-  - " &fAlive: &6%alive%"
-  - " &fSpectators: &6%spectators%"
-  - " "
-  - " &fKills: &6%kills%"
-  - "  "
-  - " &fBorder: &6%border%"
-...

@@ -30,23 +30,35 @@ class MeetupStopEvent extends PluginEvent {
      */
     public function managePlayers() : void{
         Meetup::getInstance()->getScheduler()->cancelAllTasks();
+
         foreach (Meetup::getInstance()->getServer()->getOnlinePlayers() as $player) {
+
             if (Meetup::getMeetupManager()->isPlaying($player)) {
                 Meetup::getMeetupManager()->removePlayer($player);
             }
+
             Meetup::getMeetupManager()->restoreChanges();
+
             if ($this->message === true) {
                 $player->sendMessage(MeetupUtils::getTranslatedMessage("message_stop"));
             }
+
             $player->setImmobile(false);
+
             $player->setGamemode(Player::SURVIVAL);
-            $player->setFood(20);
+
+            $player->setFood($player->getMaxFood());
+
             $player->setHealth($player->getMaxHealth());
+
             $player->removeAllEffects();
+
             $player->getArmorInventory()->clearAll();
+
             $player->getInventory()->clearAll();
+
             $player->teleport(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getSafeSpawn());
-            MeetupUtils::addScoreboard($player);
+            
         }
     }
 

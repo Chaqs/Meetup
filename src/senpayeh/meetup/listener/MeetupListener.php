@@ -34,7 +34,6 @@ class MeetupListener implements Listener {
      */
     public function onJoin(PlayerJoinEvent $event) : void{
         $player = $event->getPlayer();
-        MeetupUtils::addScoreboard($player);
     }
 
     /**

@@ -16,11 +16,13 @@ class Meetup extends PluginBase {
     public function onEnable() : void{
         self::$instance = $this;
         self::$manager = new MeetupManager($this);
+
         $this->initConfig();
-        $this->kit = (new Config($this->getDataFolder() . "kit.yml", Config::YAML))->getAll();
-        $this->msg = (new Config($this->getDataFolder() . "messages.yml", Config::YAML))->getAll();
+
         $this->registerListeners();
+
         $this->getServer()->getCommandMap()->register($this->getName(), new MeetupCommand());
+
         $this->loadWorlds();
     }
 
@@ -43,6 +45,8 @@ class Meetup extends PluginBase {
     }
 
     public function initConfig() : void{
+        $this->kit = (new Config($this->getDataFolder() . "kit.yml", Config::YAML))->getAll();
+        $this->msg = (new Config($this->getDataFolder() . "messages.yml", Config::YAML))->getAll();
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, [
             "gameplay" => [
                 "voting" => 60,

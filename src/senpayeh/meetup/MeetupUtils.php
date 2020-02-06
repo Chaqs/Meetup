@@ -71,11 +71,13 @@ class MeetupUtils {
      * @param Player $player
      */
     public static function addKit(Player $player) : void{
-        $player->getArmorInventory()->setHelmet(self::getItemData(Meetup::getInstance()->kit["kit"]["helmet"]));
-        $player->getArmorInventory()->setChestplate(self::getItemData(Meetup::getInstance()->kit["kit"]["chestplate"]));
-        $player->getArmorInventory()->setLeggings(self::getItemData(Meetup::getInstance()->kit["kit"]["leggings"]));
-        $player->getArmorInventory()->setBoots(self::getItemData(Meetup::getInstance()->kit["kit"]["boots"]));
-        foreach (Meetup::getInstance()->kit["kit"]["items"] as $item) {
+        $kit = array_rand(Meetup::getInstance()->kit["kits"]);
+
+        $player->getArmorInventory()->setHelmet(self::getItemData(Meetup::getInstance()->kit["kits"][$kit]["helmet"]));
+        $player->getArmorInventory()->setChestplate(self::getItemData(Meetup::getInstance()->kit["kits"][$kit]["chestplate"]));
+        $player->getArmorInventory()->setLeggings(self::getItemData(Meetup::getInstance()->kit["kits"][$kit]["leggings"]));
+        $player->getArmorInventory()->setBoots(self::getItemData(Meetup::getInstance()->kit["kits"][$kit]["boots"]));
+        foreach (Meetup::getInstance()->kit["kits"][$kit]["items"] as $item) {
             $player->getInventory()->addItem(self::getItemData($item));
         }
     }

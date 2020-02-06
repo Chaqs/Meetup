@@ -37,20 +37,24 @@ class MeetupTask extends Task {
      */
     public function onRun(int $currentTick) : void{
         switch (Meetup::getMeetupManager()->getState()) {
+
             case MeetupState::STARTING:
                 $time = $this->getTime();
                 $this->setTime(++$time);
+
                 if ($time == 1) {
                     foreach (Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers() as $player) {
                         $player->sendMessage(MeetupUtils::getTranslatedMessage("message_seconds_to_start", null, null, null, $this->starting));
                     }
                 }
+
                 if ($time == $this->starting / 2) {
                     (new MeetupStateChangeEvent(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers(), MeetupState::GRACE))->call();
                     foreach (Meetup::getMeetupManager()->getPlayers() as $player) {
                         $this->plugin->getServer()->getPlayer($player)->sendMessage(MeetupUtils::getTranslatedMessage("message_seconds_to_start", null, null, null, $time));
                     }
                 }
+
                 if ($time == $this->starting) {
                     foreach (Meetup::getMeetupManager()->getPlayers() as $player) {
                         $this->plugin->getServer()->getPlayer($player)->setImmobile(false);
@@ -60,9 +64,11 @@ class MeetupTask extends Task {
                     Meetup::getMeetupManager()->setState(MeetupState::GRACE);
                 }
                 break;
+
             case MeetupState::GRACE:
                 $time = $this->getTime();
                 $this->setTime(++$time);
+
                 if ($time == $this->grace) {
                     Meetup::getInstance()->getServer()->broadcastMessage(MeetupUtils::getTranslatedMessage("message_pvp", null, null, Meetup::getInstance()->getConfig()->getAll()["gameplay"]["end"]));
                     Meetup::getMeetupManager()->setPvP();
@@ -70,17 +76,21 @@ class MeetupTask extends Task {
                     Meetup::getMeetupManager()->setState(MeetupState::PVP);
                 }
                 break;
+
             case MeetupState::PVP:
                 $time = $this->getTime();
                 $this->setTime(++$time);
+
                 if ($time == $this->pvp) {
                     Meetup::getMeetupManager()->setState(MeetupState::END);
                 }
                 break;
+
             case MeetupState::END:
                 (new MeetupStopEvent(Meetup::getMeetupManager()->getPlayers(), true))->call();
                 break;
         }
+        
         if (count(Meetup::getMeetupManager()->getPlayers()) == 1) {
             foreach (Meetup::getInstance()->getServer()->getOnlinePlayers() as $player) {
                 if (Meetup::getMeetupManager()->isPlaying($player)) {

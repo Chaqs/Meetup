@@ -4,7 +4,6 @@ You can find the latest development phars [here](https://poggit.pmmp.io/ci/senpa
 ## Coming soon
 Features I'm working on:
  - [ ] Scenarios
- - [ ] Scoreboard
  - [ ] Statistics
  - [ ] Spectators settings
  - [ ] Border

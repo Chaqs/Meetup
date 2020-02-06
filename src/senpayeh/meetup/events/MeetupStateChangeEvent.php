@@ -53,22 +53,35 @@ class MeetupStateChangeEvent extends PluginEvent {
 
     public function prestart() : void{
         Meetup::getMeetupManager()->setRunning();
+       
         Meetup::getMeetupManager()->setState(MeetupState::STARTING);
+       
         Meetup::getInstance()->getScheduler()->scheduleRepeatingTask(new MeetupTask(Meetup::getInstance()), 20);
     }
 
     public function start() : void{
         foreach (Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["hub"])->getPlayers() as $player) {
-            Meetup::getMeetupManager()->addPlayer($player);;
+
+            Meetup::getMeetupManager()->addPlayer($player);
+            
             $player->setGamemode(Player::SURVIVAL);
-            $player->setFood(20);
+
+            $player->setFood($player->getMaxFood());
+
             $player->setHealth($player->getMaxHealth());
+
             $player->removeAllEffects();
+
             $player->getArmorInventory()->clearAll();
+
             $player->getInventory()->clearAll();
+
             MeetupUtils::addKit($player);
+
             $player->teleport(Meetup::getInstance()->getServer()->getLevelByName(Meetup::getInstance()->getConfig()->getAll()["worlds"]["game"])->getSafeSpawn());
+
             $player->setImmobile();
+            
             $player->setSneaking();
         }
     }

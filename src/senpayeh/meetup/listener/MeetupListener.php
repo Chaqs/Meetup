@@ -47,16 +47,22 @@ class MeetupListener implements Listener {
                 if ($entity->getGamemode() == Player::SURVIVAL) {
                     if ($event->getFinalDamage() >= $entity->getHealth()) {
                         if (Meetup::getMeetupManager()->isPlaying($entity)) {
+
                             Meetup::getMeetupManager()->removePlayer($entity);
+
                             MeetupUtils::addLightning($entity);
                             $event->setCancelled();
+
                             foreach ($entity->getInventory()->getContents() as $item) {
                                 $entity->dropItem($item);
                             }
+
                             foreach ($entity->getArmorInventory()->getContents() as $armor) {
                                 $entity->dropItem($armor);
                             }
+
                             MeetupUtils::setSpectator($entity);
+
                             (new PlayerDeathEvent($entity, [$entity->getInventory()->getContents(), $entity->getArmorInventory()->getContents()]))->call();
                         }
                     }
@@ -71,23 +77,31 @@ class MeetupListener implements Listener {
     public function onEntityDamageByEntity(EntityDamageByEntityEvent $event) : void{
         $entity = $event->getEntity();
         $damager = $event->getDamager();
+
         if (Meetup::getMeetupManager()->getPvP() == false) {
             $event->setCancelled();
         }
+
         if ($damager instanceof Player and $entity instanceof Player) {
             if (Meetup::getMeetupManager()->isRunning()) {
                 if (Meetup::getMeetupManager()->isPlaying($damager) and Meetup::getMeetupManager()->isPlaying($entity)) {
                     if ($event->getFinalDamage() >= $entity->getHealth()) {
+
                         Meetup::getMeetupManager()->removePlayer($entity);
                         MeetupUtils::addLightning($entity);
+
                         foreach ($entity->getInventory()->getContents() as $item) {
                             $entity->dropItem($item);
                         }
+
                         foreach ($entity->getArmorInventory()->getContents() as $armor) {
                             $entity->dropItem($armor);
                         }
+
                         MeetupUtils::setSpectator($entity);
+
                         (new PlayerDeathEvent($entity, [$entity->getInventory()->getContents(), $entity->getArmorInventory()->getContents()]))->call();
+
                         $event->setCancelled();
                     }
                 }
@@ -100,8 +114,11 @@ class MeetupListener implements Listener {
      */
     public function onPlayerQuit(PlayerQuitEvent $event) : void{
         $player = $event->getPlayer();
+
         if ($player instanceof Player) {
+
             if (Meetup::getMeetupManager()->isRunning()) {
+
                 if (Meetup::getMeetupManager()->isPlaying($player)) {
                     Meetup::getMeetupManager()->removePlayer($player);
                 }
@@ -114,9 +131,11 @@ class MeetupListener implements Listener {
      */
     public function onGamemodeChange(PlayerGameModeChangeEvent $event) : void{
         $player = $event->getPlayer();
+
         if (Meetup::getMeetupManager()->isPlaying($player)) {
             Meetup::getMeetupManager()->removePlayer($player);
         }
+
     }
 
     /**
@@ -124,10 +143,13 @@ class MeetupListener implements Listener {
      */
     public function onLevelChange(EntityLevelChangeEvent $event) : void{
         $entity = $event->getEntity();
+
         if ($entity instanceof Player) {
+
             if ($event->getTarget() == $this->plugin->getServer()->getLevelByName($this->plugin->getConfig()->getAll()["worlds"]["hub"])) {
                 MeetupUtils::addLobbyItems($entity);
             }
+
         }
     }
 
@@ -139,6 +161,33 @@ class MeetupListener implements Listener {
         if ($player->isImmobile()) {
             $event->setCancelled();
         }
+
+        /*if (Meetup::getMeetupManager()->isRunning()) {
+            $border = $this->plugin->getServer()->getLevelByName($this->plugin->getConfig()->getAll()["gameplay"]["border"]);
+
+            $level = $this->plugin->getServer()->getLevelByName($this->plugin->getConfig()->getAll()["worlds"]["game"]);
+            $xp = $player->getFloorX();
+            $zp = $player->getFloorZ();
+
+            $xs = $level->getSafeSpawn()->getX() + $border;
+            $zs = $level->getSafeSpawn()->getZ() + $border;
+
+            $x1 = abs($xp);
+            $z1 = abs($zp);
+            $x2 = abs($xs);
+            $z2 = abs($zs);
+
+            if ($x1 >= $x2 || $z1 >= $z2) {
+                if (Meetup::getMeetupManager()->isPlaying($player)) {
+                    if ($player->level == $level) {
+                        $player->sendPopup(MeetupUtils::getTranslatedLines($this->plugin->msg["popup_border"]));
+                        $event->setCancelled();
+                    }
+                }
+            }
+
+        }*/
+
     }
 
 }

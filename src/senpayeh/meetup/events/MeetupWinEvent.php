@@ -23,7 +23,9 @@ class MeetupWinEvent extends PluginEvent {
 
     public function managePlayers() : void{
         foreach (Meetup::getInstance()->getServer()->getOnlinePlayers() as $player) {
+
             $player->sendMessage(MeetupUtils::getTranslatedMessage("message_win_server", $this->getWinner()));
+            
             (new MeetupStopEvent(Meetup::getInstance()->getServer()->getOnlinePlayers(), false))->call();
         }
     }

@@ -128,7 +128,6 @@ class MeetupListener implements Listener {
             if ($event->getTarget() == $this->plugin->getServer()->getLevelByName($this->plugin->getConfig()->getAll()["worlds"]["hub"])) {
                 MeetupUtils::addLobbyItems($entity);
             }
-            MeetupUtils::addScoreboard($entity);
         }
     }
 

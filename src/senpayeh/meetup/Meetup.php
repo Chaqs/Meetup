@@ -5,6 +5,7 @@ namespace senpayeh\meetup;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use senpayeh\meetup\command\MeetupCommand;
+use senpayeh\meetup\gameplay\MeetupManager;
 use senpayeh\meetup\listener\MeetupListener;
 
 class Meetup extends PluginBase {
